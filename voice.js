@@ -24,7 +24,7 @@ export const talkToAI = async (req, res) => {
       return;
     }
     const inputPath = req.file.path; // Path to the uploaded binary audio file
-    const outputPath = `./response/${Date.now()}.wav`; // Path where the converted WAV file will be saved
+    const outputPath = `${__dirname}/response/${Date.now()}.wav`; // Path where the converted WAV file will be saved
 
     const wavPath = await convertToWav(inputPath, outputPath); // Convert binary to WAV
 
@@ -80,7 +80,7 @@ const convertResponseToAudio = async (text) => {
   const fileName = `${Date.now()}.mp3`;
   console.log("Converting response to audio...");
   const audioStream = await voice.textToSpeechStream(apiKey, voiceID, text);
-  const fileWriteStream = fs.createWriteStream("./response/" + fileName);
+  const fileWriteStream = fs.createWriteStream(`${__dirname}/response/` + fileName);
   audioStream.pipe(fileWriteStream);
   return new Promise((resolve, reject) => {
     fileWriteStream.on("finish", () => {

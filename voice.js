@@ -25,7 +25,7 @@ export const talkToAI = async (req, res) => {
     }
     const inputPath = req.file.path; // Path to the uploaded binary audio file
     const outputPath = `${__dirname}/response/${Date.now()}.wav`; // Path where the converted WAV file will be saved
-
+    console.log(process.cwd());
     const wavPath = await convertToWav(inputPath, outputPath); // Convert binary to WAV
 
     const message = await transcribeAudio(wavPath);

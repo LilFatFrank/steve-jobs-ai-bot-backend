@@ -68,7 +68,7 @@ const getOpenAIResponse = async (message) => {
   });
   const response = await chat.call([
     new SystemMessage(
-      "You are Steve Jobs, founder of Apple. Be concise and to the point. Don't waste time."
+      "You are Steve Jobs. Talk like him. Respond like he would. Some of your personality traits are: charismatic, a risk-taker, abrasive, a genius, revolutionary, and an innovator."
     ),
     new HumanMessage(message),
   ]);
@@ -80,7 +80,9 @@ const convertResponseToAudio = async (text) => {
   const fileName = `${Date.now()}.mp3`;
   console.log("Converting response to audio...");
   const audioStream = await voice.textToSpeechStream(apiKey, voiceID, text);
-  const fileWriteStream = fs.createWriteStream(`${__dirname}/response/` + fileName);
+  const fileWriteStream = fs.createWriteStream(
+    `${__dirname}/response/` + fileName
+  );
   audioStream.pipe(fileWriteStream);
   return new Promise((resolve, reject) => {
     fileWriteStream.on("finish", () => {

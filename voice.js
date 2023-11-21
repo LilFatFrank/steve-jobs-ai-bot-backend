@@ -25,7 +25,6 @@ export const talkToAI = async (req, res) => {
     }
     const inputPath = req.file.path; // Path to the uploaded binary audio file
     const outputPath = `${__dirname}/response/${Date.now()}.wav`; // Path where the converted WAV file will be saved
-    console.log(fs.readdirSync(process.cwd()));
     const wavPath = await convertToWav(inputPath, outputPath); // Convert binary to WAV
 
     const message = await transcribeAudio(wavPath);
@@ -38,7 +37,6 @@ export const talkToAI = async (req, res) => {
       res.status(400).send("No transcription available");
     }
   } catch (error) {
-    console.log(error);
     res.status(500).send(error);
   }
 };
@@ -76,7 +74,7 @@ const getOpenAIResponse = async (message) => {
 };
 const convertResponseToAudio = async (text) => {
   const apiKey = process.env.XI_LABS_KEY;
-  const voiceID = "FTsayPuFdh6l0XUivdzk";
+  const voiceID = "gbrsk86V5SEpaafBwJ0W";
   const fileName = `${Date.now()}.mp3`;
   console.log("Converting response to audio...");
   const audioStream = await voice.textToSpeechStream(apiKey, voiceID, text);
